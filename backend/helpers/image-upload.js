@@ -26,8 +26,8 @@ const imageUpload = multer({
         if (!file.originalname.match(/\.(png|jpg)$/)) {
             return cb(new Error("Por favor, envie apenas jpg ou png!"))
         }
-        cb(undefined,true)
-    }  
+        cb(undefined, true)
+    }
 })
 
-module.exports = {imageUpload}
+module.exports = { imageUpload }

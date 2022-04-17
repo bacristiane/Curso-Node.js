@@ -1,8 +1,8 @@
 const getToken = (req) => {
 
-const token = req.headers.token
+    const token = req.headers.token
 
-return token
+    return token
 }
 
 module.exports = getToken

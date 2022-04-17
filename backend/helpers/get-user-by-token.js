@@ -4,12 +4,12 @@ const User = require('../models/User')
 
 // get user by jwt token
 
-const getUserByToken = async (token) =>{
+const getUserByToken = async (token) => {
 
-    if(!token){
+    if (!token) {
         console.log(token)
-        return res.status(401).json({message:'Acesso Negado'})
-        }
+        return res.status(401).json({ message: 'Acesso Negado' })
+    }
 
     const decoded = jwt.verify(token, 'nossosecret')
 

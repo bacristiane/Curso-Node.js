@@ -5,21 +5,21 @@ const getToken = require('./get-token')
 //middleware to validate token
 const checkToken = (req, res, next) => {
 
-const token = getToken(req)
+    const token = getToken(req)
 
-if(!token){
-    console.log(token)
-    return res.status(401).json({message:'Acesso Negado'})
+    if (!token) {
+        console.log(token)
+        return res.status(401).json({ message: 'Acesso Negado' })
     }
 
-try {
-    const verified = jwt.verify(token, 'nossosecret')
-    req.user = verified
-    next()
-} catch (err) {
-    return res.status(400).json({message:'Token inválido'})
-    
-}
+    try {
+        const verified = jwt.verify(token, 'nossosecret')
+        req.user = verified
+        next()
+    } catch (err) {
+        return res.status(400).json({ message: 'Token inválido' })
+
+    }
 
 }
 

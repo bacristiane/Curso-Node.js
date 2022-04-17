@@ -148,9 +148,9 @@ module.exports = class UserController {
         const user = await getUserByToken(token)
 
         const { name, email, phone, password, confirmpassword } = req.body
-       
 
-        if(req.file){
+
+        if (req.file) {
             user.image = req.file.filename
         }
 
