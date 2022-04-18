@@ -266,11 +266,11 @@ module.exports = class PetController {
             image: user.image
         }
 
-        await Pet.findByIdAndUpdate(id,pet)
+        await Pet.findByIdAndUpdate(id, pet)
         res.status(200).json({ message: `A visita foi agendada com sucesso, entre em contato com ${pet.user.name} pelo telefone ${pet.user.phone}` })
     }
 
-    static async concludeAdoption(req,res){
+    static async concludeAdoption(req, res) {
 
         const id = req.params.id
 
@@ -296,7 +296,7 @@ module.exports = class PetController {
 
         pet.available = false
 
-        await Pet.findByIdAndUpdate(id,pet)
+        await Pet.findByIdAndUpdate(id, pet)
         res.status(200).json({ message: 'Parabéns! O ciclo de adoção foi finalizado com sucesso' })
     }
 }
