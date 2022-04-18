@@ -35,10 +35,10 @@ module.exports = class PetController {
             res.status(422).json({ message: 'A cor é obrigatória' })
             return
         }
-        if (images.length === 0) {
-            res.status(422).json({ message: 'A imagem é obrigatória' })
-            return
-        }
+        // if (images.length === 0) {
+        //  res.status(422).json({ message: 'A imagem é obrigatória' })
+        //  return
+        //  }
 
         // get pet owner
         const token = getToken(req)
@@ -63,9 +63,9 @@ module.exports = class PetController {
 
         })
 
-        images.map((image) => {
+        /* images.map((image) => {
             pet.images.push(image.filename)
-        })
+        }) */
 
         try {
             const newPet = await pet.save()
@@ -81,53 +81,84 @@ module.exports = class PetController {
 
     }
 
-    static async getAll(req,res){
+    static async getAll(req, res) {
         const pets = await Pet.find().sort('-createdAt')
 
-        res.status(200).json({pets: pets})
+        res.status(200).json({ pets: pets })
     }
 
-    static async getAllUserPets(req,res){
+    static async getAllUserPets(req, res) {
 
-    // get user from token
-    const token = getToken(req)
-    const user = await getUserByToken(token)
+        // get user from token
+        const token = getToken(req)
+        const user = await getUserByToken(token)
 
-    const pets = await Pet.find({'user._id': user._id}).sort('-createdAt')
+        const pets = await Pet.find({ 'user._id': user._id }).sort('-createdAt')
 
-    res.status(200).json({pets: pets})
+        res.status(200).json({ pets: pets })
 
     }
 
-    static async getAllUserAdoptions(req,res){
+    static async getAllUserAdoptions(req, res) {
 
         const token = getToken(req)
-    const user = await getUserByToken(token)
+        const user = await getUserByToken(token)
 
-    const pets = await Pet.find({'adopter._id': user._id}).sort('-createdAt')
+        const pets = await Pet.find({ 'adopter._id': user._id }).sort('-createdAt')
 
-    res.status(200).json({pets: pets})
+        res.status(200).json({ pets: pets })
 
     }
 
-    static async getPetById (req,res){
-        const id = req.params.id
+    static async getPetById(req, res) {
 
-        if(!ObjectId.isValid(id)){
+        const id = req.params.id
+        // check if Id is valid
+        if (!ObjectId.isValid(id)) {
 
             res.status(422).json({ message: 'ID inválido' })
             return
-
         }
 
         const pet = await Pet.findById(id)
-
-        if(!pet){
+        // check if Pet exist
+        if (!pet) {
             res.status(404).json({ message: 'Pet não encontrado' })
             return
         }
 
-        res.status(200).json({pet: pet})
+        res.status(200).json({ pet: pet })
 
+    }
+
+    static async removePetById(req, res) {
+
+        const id = req.params.id
+        // check if Id is valid
+        if (!ObjectId.isValid(id)) {
+
+
+        }
+
+        const pet = await Pet.findById(id)
+        // check if Pet exist
+        if (!pet) {
+            res.status(404).json({ message: 'Pet não encontrado' })
+            return
+        }
+
+        //check if logged in user registered pet
+        const token = getToken(req)
+        const user = await getUserByToken(token)
+
+
+        if (pet.user._id.toString() !== user._id.toString()) {
+            res.status(422).json({ message: 'Houve um problema em processar sua solicitação, tente novamente mais tarde' })
+            return
+        }
+
+        await Pet.findByIdAndRemove(id)
+
+        res.status(200).json({message:'Pet removido com sucesso'})
     }
 }
