@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Container from './components/layouts/Container'
 
 //pages
 import Login from './components/pages/Auth/Login';
@@ -13,6 +14,7 @@ function App() {
   return (
     <Router>
       <Navbar />
+      <Container>
       <Routes>
         <Route path="/login" element={<Login />} />
           
@@ -20,6 +22,7 @@ function App() {
           
         <Route path="/" element={<Home />} />
       </Routes>
+      </Container>
       <Footer />
     </Router>
   )
