@@ -10,9 +10,13 @@ import Home from './components/pages/Home';
 import Navbar from './components/layouts/Navbar';
 import Footer from './components/layouts/Footer';
 
+//context
+import{UserProvider} from './context/UserContext'
+
 function App() {
   return (
     <Router>
+      <UserProvider>
       <Navbar />
       <Container>
       <Routes>
@@ -24,6 +28,7 @@ function App() {
       </Routes>
       </Container>
       <Footer />
+      </UserProvider>
     </Router>
   )
 }
