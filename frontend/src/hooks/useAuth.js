@@ -9,7 +9,20 @@ import useFlashMessage from './useFlashMessage'
 
 export default function useAuth(){
 
+    const [authenticated, setAuthenticated] = useState(false)
     const { setFlashMessage } = useFlashMessage()
+    const navigate = useNavigate()
+
+    useEffect(()=>{
+
+        const token = localStorage.getItem('token')
+        console.log(token)
+        if(token){
+            api.defaults.headers.token = `${JSON.parse(token)}` 
+            setAuthenticated(true)
+        }
+        
+    },[])
 
     async function register(user){
 
@@ -18,9 +31,8 @@ export default function useAuth(){
         try {
             const data = await api.post('/users/register', user).then((response) => {
                 return response.data
-
-                console.log(data)
             })
+            await authUser(data)
         } catch (error) {
             console.log(error)
             msgText = error.response.data.message
@@ -30,5 +42,16 @@ export default function useAuth(){
         setFlashMessage(msgText,msgType)
     }
 
-    return { register }
+    async function authUser(data){
+
+        setAuthenticated(true)
+
+        localStorage.setItem('token', JSON.stringify(data.token))
+
+        navigate('/')
+
+
+    }
+
+    return { authenticated, register }
 }
