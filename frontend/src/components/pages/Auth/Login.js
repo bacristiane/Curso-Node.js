@@ -11,14 +11,17 @@ import { Context } from '../../../context/UserContext'
 
 function Login() {
 
+    const [user,setUser] = useState({})
+    const {login} =useContext(Context)
+
     function handleChange(e){
-        /* setUser({...user, [e.target.name]: e.target.value}) */
+        setUser({...user, [e.target.name]: e.target.value})
 
     }
     function handleSubmit(e){
-        /* e.preventDefault()
-        //enviar usuário para o banco
-        register(user) */
+        e.preventDefault()
+        //login do usuario
+        login(user)
     }
     return(
         <section className={styles.form_container}>
