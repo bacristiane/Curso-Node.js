@@ -9,6 +9,7 @@ import Home from './components/pages/Home';
 //components
 import Navbar from './components/layouts/Navbar';
 import Footer from './components/layouts/Footer';
+import Message from './components/layouts/Message'
 
 //context
 import{UserProvider} from './context/UserContext'
@@ -18,6 +19,7 @@ function App() {
     <Router>
       <UserProvider>
       <Navbar />
+      <Message />
       <Container>
       <Routes>
         <Route path="/login" element={<Login />} />
