@@ -42,7 +42,7 @@ function Profile() {
    async function handleSubmit(e){
         e.preventDefault()
         //editar usuário
-        let msgType = 'sucess'
+        let msgType = 'success'
 
         const formData = new FormData()
 

@@ -25,6 +25,27 @@ function MyPets() {
         
     },[token])
 
+    async function removePet(id){
+        let msgType='success'
+
+        const data = await api
+        .delete(`/pets/${id}`, {
+            headers:{
+                token: `${JSON.parse(token)}`,
+            },
+        })
+        .then((response) => {
+            const updatedPets = pets.filter((pet) => pet._id != id )
+            setPets(updatedPets)
+            return response.data
+        })
+        .catch((err) => {
+            msgType='error'
+            return err.response.data
+        })
+        setFlashMessage(data.message,msgType)
+    }
+
     return(
         <section >
             <div className={styles.petlist_header}>
@@ -48,7 +69,9 @@ function MyPets() {
                             <button className={styles.conclude_btn}> Concluir adoção </button>
                         )}
                         <Link to={`/pet/edit/${pet._id}`}> Editar</Link>
-                        <button>Excluir</button>
+                        <button onClick={() => {
+                            removePet(pet._id)
+                        }}>Excluir</button>
                         </>) 
                         : (
                             <p>Pet já adotado</p>

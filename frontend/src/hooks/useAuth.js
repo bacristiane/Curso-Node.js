@@ -27,7 +27,7 @@ export default function useAuth(){
     async function register(user){
 
         let msgText = 'Cadastro realizado com sucesso'
-        let msgType = 'sucess'
+        let msgType = 'success'
         try {
             const data = await api.post('/users/register', user).then((response) => {
                 return response.data
@@ -57,7 +57,7 @@ export default function useAuth(){
 
     function logout(){
         const msgText = 'Logout realizado com sucesso'
-        const msgType = 'sucess'
+        const msgType = 'success'
 
         setAuthenticated(false)
         localStorage.removeItem('token')
@@ -71,7 +71,7 @@ export default function useAuth(){
     async function login(user){
 
         let msgText = 'Login realizado com sucesso'
-        let msgType = 'sucess'
+        let msgType = 'success'
         try {
             const data = await api.post('/users/login', user).then((response) => {
                 return response.data         

@@ -20,7 +20,7 @@ function AddPet() {
 
     async function registerPet(pet) {
 
-        let msgType ='sucess'
+        let msgType ='success'
 
         const formData = new FormData
 
