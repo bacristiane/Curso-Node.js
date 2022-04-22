@@ -1,3 +1,5 @@
+import api from '../../../utils/api'
+
 import {useState, useEffect} from 'react'
 
 import formStyles from '../../form/Form.module.css'
@@ -9,7 +11,19 @@ import Input from '../../form/Input'
 
 function Profile() {
 
+    const [token] = useState(localStorage.getItem('token') || '')
     const [user,setUser] = useState({})
+
+    useEffect(()=>{
+        api.get('/users/checkUser',{
+            headers:{
+                token: `${JSON.parse(token)}`
+            }
+        }).then((response)=>{
+            setUser(response.data)
+        })
+
+    },[token])
 
     function handleChange(e){
         setUser({...user, [e.target.name]: e.target.value})
