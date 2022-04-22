@@ -63,9 +63,9 @@ module.exports = class PetController {
 
         })
 
-        /* images.map((image) => {
+        images.map((image) => {
             pet.images.push(image.filename)
-        }) */
+        })
 
         try {
             const newPet = await pet.save()
