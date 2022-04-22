@@ -6,6 +6,7 @@ import formStyles from '../../form/Form.module.css'
 import styles from './Profile.module.css'
 
 import Input from '../../form/Input'
+import useFlashMessage from '../../../hooks/useFlashMessage'
 
 
 
@@ -13,6 +14,7 @@ function Profile() {
 
     const [token] = useState(localStorage.getItem('token') || '')
     const [user,setUser] = useState({})
+    const {setFlashMessage} = useFlashMessage()
 
     useEffect(()=>{
         api.get('/users/checkUser',{
@@ -30,14 +32,33 @@ function Profile() {
 
     }
     function onFileChange(e){
-        setUser({...user, [e.target.name]: e.target.value})
+        setUser({...user, [e.target.name]: e.target.files[0]})
 
     }
 
-    function handleSubmit(e){
+   async function handleSubmit(e){
         e.preventDefault()
-        //enviar usuário para o banco
-        register(user)
+        //editar usuário
+        let msgType = 'sucess'
+
+        const formData = new FormData()
+
+        await Object.keys(user).forEach((key) =>
+        formData.append(key, user[key])  
+        )
+
+        const data = await api.patch(`/users/edit/${user._id}`, formData, {
+            headers:{
+                token: `${JSON.parse(token)}`
+            }
+        }).then((response) => {
+            return response.data
+        }).catch((err)=>{
+            msgType = 'error'
+            return err.response.data
+        })
+
+        setFlashMessage(data.message,msgType)
     }
 
     return(
