@@ -7,6 +7,7 @@ import styles from './Profile.module.css'
 
 import Input from '../../form/Input'
 import useFlashMessage from '../../../hooks/useFlashMessage'
+import RoundedImage from '../../layouts/RoundedImage'
 
 
 
@@ -51,7 +52,8 @@ function Profile() {
 
         const data = await api.patch(`/users/edit/${user._id}`, formData, {
             headers:{
-                token: `${JSON.parse(token)}`
+                token: `${JSON.parse(token)}`,
+                'Content-Type': 'multipart/form-data'
             }
         }).then((response) => {
             return response.data
@@ -68,7 +70,8 @@ function Profile() {
             <div className={styles.profile_header}>
             <h1>Profile</h1>
             {(user.image || preview) && (
-                <img src= {preview ? URL.createObjectURL(preview) : `${process.env.REACT_APP_API}/images/users/${user.image}`} alt={user.name} />
+                < RoundedImage
+                    img src= {preview ? URL.createObjectURL(preview) : `${process.env.REACT_APP_API}/images/users/${user.image}`} alt={user.name} />
             )}
             
             </div>
