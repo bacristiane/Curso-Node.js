@@ -5,6 +5,9 @@ import styles from './AddPet.module.css'
 import {useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 
+//component
+import PetForm from '../../form/PetForm'
+
 //hooks
 import useFlashMessage from '../../../hooks/useFlashMessage'
 
@@ -16,7 +19,7 @@ function AddPet() {
                 <h1>Cadastre um Pet</h1>
                 <p>Depois ele ficará disponível para adoção</p>
             </div>
-            <p>formulário</p>
+            <PetForm btnText="Cadastrar" />
         </section>
     )
     }
