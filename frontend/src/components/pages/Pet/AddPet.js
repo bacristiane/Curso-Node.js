@@ -22,7 +22,7 @@ function AddPet() {
 
         let msgType ='success'
 
-        const formData = new FormData
+        const formData = new FormData()
 
         await Object.keys(pet).forEach((key) => {
             if ( key === 'images') {
@@ -33,7 +33,7 @@ function AddPet() {
                 formData.append(key, pet[key])
             }
         })
-
+        console.log(token)
         const data = await api.post('pets/create', formData,{ 
             token: `${JSON.parse(token)}`,
             'Content-Type':'multipart/form-data',
@@ -43,7 +43,7 @@ function AddPet() {
         .catch((err) => {
             msgType='error'
             return err.response.data
-        })
+        },[token])
 
         setFlashMessage(data.message,msgType)
 

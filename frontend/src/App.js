@@ -16,6 +16,7 @@ import Message from './components/layouts/Message'
 
 //context
 import{UserProvider} from './context/UserContext'
+import EditPet from './components/pages/Pet/EditPet';
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
         <Route path="/user/profile" element={<Profile />} />
         <Route path="/pet/mypets" element={<MyPets />} />
         <Route path="/pet/add" element={<AddPet />} />
+        <Route path="/pet/edit/:id" element={<EditPet />} />
           
         <Route path="/" element={<Home />} />
       </Routes>
