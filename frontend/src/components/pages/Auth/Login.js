@@ -29,7 +29,7 @@ function Login() {
             <form onSubmit={handleSubmit}>
                 <Input 
                 text="Email"
-                type="email"
+                type="text"
                 name="email"
                 placeholder="Digite o seu email"
                 handleOnChange={handleChange}
